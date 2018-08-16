@@ -41,7 +41,7 @@ module.exports = function (env) {
       new webpack.ContextReplacementPlugin(
 
         // The ([\\/]) piece accounts for path separators in *nix and Windows
-        /angular([\\/])core([\\/])@angular/,
+        /angular([\\/])core([\\/])@angular|esm5/,
         path.resolve(__dirname, './src'),
 
         // your Angular Async Route paths relative to this root directory
@@ -143,9 +143,10 @@ module.exports = function (env) {
     webpackConfig.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
   }
 
+  var plugins;
   if (env.isTest) {
     webpackConfig.devtool = false;
-    var plugins = [
+    plugins = [
       new webpack.SourceMapDevToolPlugin({
         filename: null, // if no value is provided the sourcemap is inlined
         test: /\.(ts|js)($|\?)/i // process .js and .ts files only
@@ -153,7 +154,7 @@ module.exports = function (env) {
     ];
     webpackConfig.plugins = webpackConfig.plugins.concat(plugins);
   } else {
-    var plugins = [
+    plugins = [
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks: function (module) {

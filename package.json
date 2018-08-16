@@ -1,6 +1,6 @@
 {
-  "name": "xForge",
-  "version": "0.1.0",
+  "name": "x-forge",
+  "version": "1.0.0",
   "description": "xForge - Language Forge and Scripture Forge",
   "private": true,
   "scripts": {
@@ -10,10 +10,19 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sillsdev/web-languageforge.git",
-    "alternate-url": "https://github.com/sillsdev/web-scriptureforge.git"
+    "url": "https://github.com/sillsdev/web-languageforge.git"
   },
   "dependencies": {
+    "@angular/common": "^6.1.3",
+    "@angular/compiler": "^6.1.3",
+    "@angular/core": "^6.1.3",
+    "@angular/forms": "^6.1.3",
+    "@angular/http": "^6.1.3",
+    "@angular/platform-browser": "^6.1.3",
+    "@angular/platform-browser-dynamic": "^6.1.3",
+    "@angular/router": "^6.1.3",
+    "@angular/upgrade": "^6.1.3",
+    "ajv": "^6.5.2",
     "angular": "1.6.10",
     "angular-moment-picker": "git+https://github.com/sillsdev/angular-moment-picker.git",
     "angular-route": "^1.6.5",
@@ -43,8 +52,9 @@
     "quill": "^1.3.6",
     "rangy": "^1.3.0",
     "rich-text": "^3.0.1",
+    "rxjs": "^6.2.2",
     "sharedb": "^1.0.0-beta",
-    "zone.js": "^0.8.16",
+    "zone.js": "^0.8.26",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
