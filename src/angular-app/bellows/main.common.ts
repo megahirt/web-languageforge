@@ -1,4 +1,3 @@
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {setAngularLib} from '@angular/upgrade/static';
 import * as angular from 'angular';
 
@@ -9,8 +8,6 @@ import 'angular-ui-validate';
 import 'angular-zxcvbn';
 
 import 'ng-file-upload/dist/ng-file-upload-all.js';
-
-import {AppModule} from '../../app/app.module';
 
 import './polyfills.browser';
 
@@ -26,6 +23,3 @@ import './apps/siteadmin/site-admin-app.module';
 import './apps/userprofile/user-profile-app.module';
 
 setAngularLib(angular);
-
-// allow HTML to load before bootstrapping
-setTimeout(() => platformBrowserDynamic().bootstrapModule(AppModule), 0);

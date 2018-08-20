@@ -1,21 +1,12 @@
-import {Inject, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {Inject} from '@angular/core';
 import {UpgradeModule} from '@angular/upgrade/static';
 
 interface AppWindow extends Window {
   appName: string;
 }
 
-@NgModule({
-  imports: [
-    BrowserModule,
-    UpgradeModule
-  ],
-  providers: [
-    { provide: 'APP_NAME', useFactory: getAppName }
-  ]
-})
-export class AppModule {
+export abstract class AppModule {
+  // noinspection TypeScriptAbstractClassConstructorCanBeMadeProtected
   constructor(@Inject(UpgradeModule) private upgrade: UpgradeModule, @Inject('APP_NAME') private appName: string) { }
 
   // noinspection JSUnusedGlobalSymbols
