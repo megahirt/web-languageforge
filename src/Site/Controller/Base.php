@@ -4,7 +4,6 @@ namespace Site\Controller;
 
 use Api\Library\Shared\Palaso\StringUtil;
 use Api\Library\Shared\SilexSessionHelper;
-use Api\Library\Shared\Website;
 use Api\Model\Shared\FeaturedProjectListModel;
 use Api\Model\Shared\Rights\SystemRoles;
 use Api\Model\Shared\Rights\Operation;
@@ -18,7 +17,6 @@ use Symfony\Component\Security\Acl\Exception\Exception;
 class Base
 {
     public function __construct() {
-        $this->website = Website::get();
         $this->_appName = '';
         $this->data['isAdmin'] = false;
         $this->data['projects'] = [];
@@ -40,9 +38,6 @@ class Base
 
     /** @var array data used to render templates */
     public $data;
-
-    /** @var Website */
-    public $website;
 
     /** @var boolean */
     protected $_isLoggedIn;
@@ -116,8 +111,8 @@ class Base
         $this->data['faviconPath'] = $this->getFilePath('image/favicon.ico');
 
         $this->data['manifestFilename'] = '';
-        if (file_exists('appManifest/' . $this->website->base . '.manifest.json')) {
-            $this->data['manifestFilename'] = $this->website->base . '.manifest.json';
+        if (file_exists('appManifest/languageforge.manifest.json')) {
+            $this->data['manifestFilename'] = 'languageforge.manifest.json';
         }
         $this->data['themeColor'] = '#0a2440';
 
@@ -158,7 +153,7 @@ class Base
             } else {
                 $this->data['smallAvatarUrl'] = '/Site/views/shared/image/avatar/' . $this->_user->avatar_ref;
             }
-            $projects = $this->_user->listProjects($this->website->domain);
+            $projects = $this->_user->listProjects('languageforge.org');
             $this->data['projects_count'] = $projects->count;
             $this->data['projects'] = $projects->entries;
         }
