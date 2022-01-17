@@ -84,12 +84,10 @@ export class NavbarController implements angular.IController {
     });
     this.$scope.$on('$locationChangeStart', (event, next, current) => {
       if (current.includes('/lexicon') && !current.includes('/new-project')) {
-        console.log(`Current Path ${location.pathname}`);
         this.showShareButton = true;
       }else{
         this.showShareButton = false;
       }
-      console.log(`location pathname: ${location.pathname}, next: ${next}, current: ${current}`);
     })
   }
 
