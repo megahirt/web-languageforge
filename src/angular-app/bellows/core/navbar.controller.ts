@@ -21,10 +21,10 @@ export class NavbarController implements angular.IController {
   project: Project;
   interfaceConfig: InterfaceConfig;
   currentUserIsProjectManager: boolean;
-  displayShareButton: boolean;
+  displayHeaderButtons: boolean;
   projectTypeNames: ProjectTypeNames;
   siteName: string;
-  showShareButton: boolean = false;
+  isLexiconProject: boolean = false;
 
   static $inject = [
     '$scope',
@@ -75,20 +75,31 @@ export class NavbarController implements angular.IController {
         this.currentUserIsProjectManager =
           (session.data.userProjectRole === ProjectRoles.MANAGER.key) ||
           (session.data.userProjectRole === ProjectRoles.TECH_SUPPORT.key);
-        this.displayShareButton =
+        this.displayHeaderButtons =
           (this.currentUserIsProjectManager || (this.project.allowSharing && this.session.data.userIsProjectMember));
       }
+      console.log(`this.project: ${this.project}`);
+      console.log(`this.currentUserIsProjectManager: ${this.currentUserIsProjectManager}`);
+      console.log(`session.data.userProjectRole: ${session.data.userProjectRole}`);
+      console.log(`this.displayShareButton ${this.displayHeaderButtons}`);
+      console.log(`this.currentUserIsProjectManager ${this.currentUserIsProjectManager}`);
+      console.log(`this.project.allowSharing: ${this.project.allowSharing}`);
+      console.log(`this.session.data.userIsProjectMember: ${this.session.data.userIsProjectMember}`);
+
       this.rights.canCreateProject =
         session.hasSiteRight(this.sessionService.domain.PROJECTS, this.sessionService.operation.CREATE);
       this.siteName = session.baseSite();
     });
     this.$scope.$on('$locationChangeStart', (event, next, current) => {
-      if (current.includes('/lexicon') && !current.includes('/new-project')) {
-        this.showShareButton = true;
+      if (current.includes('/lexicon') && !current.includes('/new-project') && this.displayHeaderButtons) {
+        this.isLexiconProject = true;
+        console.log(`Current Path: ${location.pathname}`);
       }else{
-        this.showShareButton = false;
+        this.isLexiconProject = false;
       }
-    })
+      console.log(`location pathname: ${location.pathname}, next: ${next}, current: ${current}`);
+      console.log(`this.isLexiconProject: ${this.isLexiconProject}`);
+    });
   }
 
   onUpdate = ($event: { interfaceConfig: InterfaceConfig}): void => {
