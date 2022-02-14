@@ -2,7 +2,7 @@ name: Tests
 
 # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#on
 on:
-  pull_request:
+  push:
 
 defaults:
   run:
@@ -17,19 +17,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      -
-        uses: actions/checkout@v2
-      -
-        name: Run Unit Tests
+      - uses: actions/checkout@v2
+
+      - name: Run Unit Tests
         run: make unit-tests-ci
-      -
-        name: Publish Test Results
+
+  php-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: php-actions/composer@v5
+
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@v2
+        with:
+          php_version: 7.3
+          php_extensions: gd mongodb intl
+          log_junit: test/PhpUnitTests.xml
+          bootstrap: vendor/autoload.php
+          configuration: test/php/phpunit.xml
+
+      - name: Publish Test Results to GH
         uses: docker://ghcr.io/enricomi/publish-unit-test-result-action:v1
         if: always()
         with:
           check_name: Unit Test Results
           github_token: ${{ github.token }}
-          files: docker/PhpUnitTests.xml
+          files: test/PhpUnitTests.xml
+
 
   # e2e-tests:
   #   runs-on: ubuntu-latest
